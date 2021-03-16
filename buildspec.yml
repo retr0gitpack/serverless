@@ -1,19 +1,17 @@
---- 
-phases: 
-  build: 
-    commands: 
-      - "echo Build started on `date`"
-      - "echo Building the Docker image..."
-      - "docker build -t ecr-login/latest"
-      - "docker tag ecrlogin/node-server dvohra/node-server:latest"
-  post_build: 
-    commands: 
-      - "echo Build completed on `date`"
-      - "echo Pushing the Docker image..."
-      - docker push 728483987316.dkr.ecr.us-east-1.amazonaws.com/ecr-login:latest
-  pre_build: 
-    commands: 
-      - "echo Logging in to ECR..."
+...
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 728483987316.dkr.ecr.us-east-1.amazonaws.com
-version: 0.1
-
+  build
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...          
+      - docker build -t ecr-login:latest .
+      - docker tag ecr-login:latest 728483987316.dkr.ecr.us-east-1.amazonaws.com/ecr-login:latest
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push 728483987316.dkr.ecr.us-east-1.amazonaws.com/ecr-login:latest
+...
