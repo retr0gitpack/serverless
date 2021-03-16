@@ -4,16 +4,16 @@ phases:
     commands: 
       - "echo Build started on `date`"
       - "echo Building the Docker image..."
-      - "docker build -t dvohra/node-server ."
-      - "docker tag dvohra/node-server dvohra/node-server:latest"
+      - "docker build -t ecrlogin/node-server ."
+      - "docker tag ecrlogin/node-server dvohra/node-server:latest"
   post_build: 
     commands: 
       - "echo Build completed on `date`"
       - "echo Pushing the Docker image..."
-      - "docker push dvohra/node-server:latest"
+      - "docker push ecrlogin/node-server:latest"
   pre_build: 
     commands: 
-      - "echo Logging in to Docker Hub..."
-      - "docker login --username=\"dvohra\" --password=\"password\""
+      - "echo Logging in to ECR..."
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
 version: 0.1
 
