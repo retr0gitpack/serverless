@@ -7,7 +7,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...          
-      - docker build -t ecr-login:latest .
+      - docker build -t ecr-login .
       - docker tag ecr-login:latest 728483987316.dkr.ecr.us-east-1.amazonaws.com/ecr-login:latest
   post_build:
     commands:
